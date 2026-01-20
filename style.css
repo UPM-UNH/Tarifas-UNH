@@ -1,254 +1,255 @@
-/* =========================================================
-   TARIFARIO UNH – style.css
-   ========================================================= */
+/* =====================================================
+   TARIFARIO TUPA / TUSNE – UNH
+   style.css
+   ===================================================== */
 
-/* -------- RESET BÁSICO -------- */
+/* -------- RESET -------- */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 body {
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: #f4f6f9;
-  color: #1f2933;
-  line-height: 1.5;
+  background: #f4f6f8;
+  color: #1f2937;
 }
 
 /* -------- HEADER -------- */
 .site-header {
-  background: linear-gradient(135deg, #003866, #005aa3);
+  background: linear-gradient(135deg, #003566, #00509d);
   color: #fff;
-  padding: 24px 16px;
+  padding: 28px 16px;
   text-align: center;
 }
 
 .site-header h1 {
-  font-size: 1.8rem;
-  margin-bottom: 6px;
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .site-header .subtitle {
-  font-size: 0.95rem;
+  font-size: 14px;
   opacity: 0.9;
+  margin-top: 6px;
 }
 
 /* -------- CONTAINER -------- */
 .container {
-  max-width: 1200px;
-  margin: 24px auto;
+  max-width: 1250px;
+  margin: 28px auto;
   padding: 0 16px;
 }
 
-/* -------- CONTROLS / FILTROS -------- */
+/* -------- CONTROLS -------- */
 .controls {
-  background: #ffffff;
+  background: #fff;
   border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  margin-bottom: 20px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  margin-bottom: 18px;
 }
 
-.search-wrap input {
+.controls input,
+.controls select {
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
-  font-size: 0.95rem;
+  font-size: 14px;
 }
 
-.filters-wrap {
-  margin-top: 12px;
-  display: flex;
-  flex-wrap: wrap;
+.controls input:focus,
+.controls select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.controls-row {
+  display: grid;
+  grid-template-columns: 1fr 300px auto;
   gap: 12px;
+  margin-top: 12px;
 }
 
-.filter-select {
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 0.9rem;
-  background: #fff;
+@media (max-width: 900px) {
+  .controls-row {
+    grid-template-columns: 1fr;
+  }
 }
 
+/* -------- EXPORT PDF -------- */
 .btn-export {
-  background: #c62828;
+  background: #dc2626;
   color: #fff;
   border: none;
-  padding: 8px 14px;
   border-radius: 8px;
-  font-size: 0.9rem;
+  padding: 10px 14px;
+  font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .btn-export:hover {
-  background: #b71c1c;
+  background: #b91c1c;
 }
 
-/* -------- MONTO SLIDER -------- */
+/* -------- MONTO FILTER -------- */
 .monto-filter {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
-.monto-label {
+.monto-filter label {
+  font-size: 13px;
   font-weight: 600;
   margin-bottom: 6px;
+  display: block;
 }
 
-.slider-wrap {
-  display: flex;
-  gap: 10px;
-}
-
-.slider-wrap input[type="range"] {
+.monto-filter input[type="range"] {
   width: 100%;
 }
 
 .monto-values {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
-  margin-top: 4px;
-  color: #374151;
+  font-size: 12px;
+  color: #6b7280;
 }
 
-/* -------- STATUS -------- */
-.status {
-  text-align: center;
-  padding: 12px;
-  font-size: 0.95rem;
-  color: #6b7280;
+/* -------- GRATUITO -------- */
+#gratuitoBtn {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #2563eb;
+  background: #fff;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+#gratuitoBtn.active {
+  background: #2563eb;
+  color: #fff;
 }
 
 /* -------- WARNING -------- */
 .tarifa-warning {
-  background: #fff8e1;
-  border-left: 5px solid #ffb300;
-  padding: 10px 14px;
-  margin-bottom: 16px;
-  font-size: 0.85rem;
-  color: #5f4b00;
-  border-radius: 6px;
+  background: #fff3cd;
+  color: #92400e;
+  border-left: 6px solid #f59e0b;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 13px;
 }
 
 /* -------- CARDS -------- */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
 .card {
-  background: #ffffff;
+  background: #fff;
   border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: space-between;
 }
 
-.tag-origen {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #0d47a1;
-  background: #e3f2fd;
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 999px;
-  align-self: flex-start;
-}
-
-.card-title {
-  font-size: 1rem;
+.card h3 {
+  font-size: 16px;
+  margin: 10px 0;
   font-weight: 700;
-  margin-top: 6px;
 }
 
-.meta {
-  font-size: 0.85rem;
-  color: #374151;
+.card p {
+  font-size: 13px;
+  margin-bottom: 6px;
 }
 
-/* -------- ACTIONS -------- */
+.tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+  font-weight: 600;
+}
+
+/* -------- ACTION BUTTONS -------- */
 .actions {
-  margin-top: auto;
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  margin-top: 14px;
 }
 
-.btn {
+.actions .btn {
   flex: 1;
-  padding: 8px;
+  padding: 8px 10px;
   border-radius: 8px;
-  font-size: 0.8rem;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
   text-align: center;
   text-decoration: none;
-  cursor: pointer;
-  border: none;
 }
 
-.btn-requisitos {
-  background: #003866;
+/* Requisitos */
+.actions .requisitos {
+  background: #003566;
   color: #fff;
 }
 
-.btn-requisitos:hover {
-  background: #002f57;
-}
-
-.btn-mail {
-  background: #6d28d9;
+/* Gmail */
+.actions .gmail {
+  background: #ea4335;
   color: #fff;
 }
 
-.btn-mail:hover {
-  background: #5b21b6;
-}
-
-.btn-ws {
+/* WhatsApp */
+.actions .whatsapp {
   background: #25d366;
   color: #fff;
 }
 
-.btn-ws:hover {
-  background: #1ebe5d;
-}
-
-/* -------- PAGINACIÓN -------- */
+/* -------- PAGINATION -------- */
 .pagination {
   display: flex;
   justify-content: center;
   gap: 6px;
-  margin-top: 20px;
+  margin: 26px 0;
 }
 
-.page-btn {
-  padding: 6px 10px;
+.pagination button {
+  padding: 6px 12px;
   border-radius: 6px;
   border: 1px solid #d1d5db;
   background: #fff;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 13px;
 }
 
-.page-btn.active {
-  background: #003866;
+.pagination button.active {
+  background: #2563eb;
   color: #fff;
-  border-color: #003866;
+  border-color: #2563eb;
 }
 
 /* -------- MODAL -------- */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -261,45 +262,29 @@ body {
 
 .modal {
   background: #fff;
-  border-radius: 14px;
+  border-radius: 16px;
+  width: 100%;
   max-width: 600px;
-  width: 90%;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  position: relative;
-}
-
-.modal-close {
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  background: none;
-  border: none;
-  font-size: 0.9rem;
-  cursor: pointer;
-  color: #374151;
+  padding: 22px;
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
 .modal-title {
-  font-size: 1.2rem;
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .modal-meta p {
-  font-size: 0.85rem;
+  font-size: 13px;
   margin-bottom: 6px;
 }
 
-.modal-meta a {
-  color: #003866;
-  text-decoration: none;
-}
-
 .req-title {
-  margin-top: 12px;
-  font-size: 1rem;
-  font-weight: 600;
+  margin-top: 16px;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .modal-body ul {
@@ -308,27 +293,30 @@ body {
 }
 
 .modal-body li {
-  font-size: 0.85rem;
-  margin-bottom: 4px;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* -------- MODAL BUTTONS -------- */
+.modal-close {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-weight: 700;
+  cursor: pointer;
+  float: right;
 }
 
 /* -------- CALCULADORA -------- */
 .calc-section {
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .estimation-result {
-  font-size: 0.85rem;
-  color: #374151;
-}
-
-/* -------- RESPONSIVE -------- */
-@media (max-width: 600px) {
-  .filters-wrap {
-    flex-direction: column;
-  }
-
-  .actions {
-    flex-direction: column;
-  }
+  margin-top: 10px;
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
 }
