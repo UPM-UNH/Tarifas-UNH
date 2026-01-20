@@ -58,7 +58,7 @@ let data = [];
 let filteredData = [];
 let fuse = null;
 
-const pageSize = 21;
+const pageSize = CONFIG?.PAGE_SIZE || 20;
 let currentPage = 1;
 
 /* =======================
