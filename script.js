@@ -1,17 +1,8 @@
 /* =========================================================
-   script.js — FASE 1
-   Carga y validación del CSV (Google Sheets)
+   script.js — FASE 2
+   Render básico de tarjetas
    ========================================================= */
 
-// Verificar que config.js esté cargado
-if (typeof SHEET_CSV_URL === "undefined") {
-  console.error("❌ ERROR: SHEET_CSV_URL no está definido. Revisa config.js");
-} else {
-  console.log("✅ config.js cargado correctamente");
-  console.log("CSV URL:", SHEET_CSV_URL);
-}
-
-// Columnas esperadas (CANÓNICAS)
 const REQUIRED_COLUMNS = [
   "origen",
   "unidad",
@@ -25,70 +16,73 @@ const REQUIRED_COLUMNS = [
   "celular"
 ];
 
-// Utilidad: normalizar encabezados
+const cardsContainer = document.getElementById("cardsContainer");
+
+// Utilidades
 function normalizeHeader(text) {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim();
+  return text.toString().toLowerCase().trim();
+}
+
+function escapeHTML(str) {
+  return (str || "").replace(/[&<>"']/g, m =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m])
+  );
 }
 
 // Cargar CSV
 function loadCSV() {
   if (typeof Papa === "undefined") {
-    console.error("❌ ERROR: PapaParse no está cargado");
+    console.error("❌ PapaParse no está cargado");
     return;
   }
-
-  console.log("📥 Descargando CSV...");
 
   Papa.parse(SHEET_CSV_URL, {
     download: true,
     header: true,
     skipEmptyLines: true,
     complete: function (result) {
-      console.log("📦 CSV descargado");
-      console.log("Filas crudas:", result.data.length);
 
-      if (!result.meta || !result.meta.fields) {
-        console.error("❌ ERROR: No se pudieron leer los encabezados del CSV");
-        return;
-      }
-
-      // Normalizar encabezados reales
       const headers = result.meta.fields.map(normalizeHeader);
+      const missing = REQUIRED_COLUMNS.filter(c => !headers.includes(c));
 
-      console.log("📑 Encabezados detectados:", headers);
-
-      // Validar columnas obligatorias
-      const missing = REQUIRED_COLUMNS.filter(col => !headers.includes(col));
-
-      if (missing.length > 0) {
-        console.error("❌ ERROR: Faltan columnas obligatorias:");
-        missing.forEach(col => console.error("   -", col));
+      if (missing.length) {
+        console.error("❌ Faltan columnas:", missing);
         return;
       }
 
-      console.log("✅ Todas las columnas obligatorias están presentes");
+      const data = result.data.filter(r => r.proceso || r.tarifa);
 
-      // Validar que haya datos útiles
-      const validRows = result.data.filter(row =>
-        row.proceso || row.tarifa
-      );
+      console.log("✅ Registros a renderizar:", data.length);
 
-      if (validRows.length === 0) {
-        console.error("❌ ERROR: No se encontraron filas válidas");
-        return;
-      }
-
-      console.log("✅ Registros válidos cargados:", validRows.length);
-      console.log("🔎 Ejemplo de fila:", validRows[0]);
-
-      console.log("🎉 FASE 1 COMPLETADA CON ÉXITO");
+      renderCards(data);
     },
-    error: function (err) {
-      console.error("❌ ERROR al descargar o procesar el CSV:", err);
-    }
+    error: err => console.error("❌ Error CSV:", err)
+  });
+}
+
+// Render tarjetas simples
+function renderCards(data) {
+  cardsContainer.innerHTML = "";
+
+  data.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <div class="card-title">${escapeHTML(item.proceso || "—")}</div>
+      <div><strong>Tarifa:</strong> ${escapeHTML(item.tarifa)}</div>
+      <div><strong>Monto:</strong> S/ ${escapeHTML(item.monto)}</div>
+      <div><strong>Unidad:</strong> ${escapeHTML(item.unidad)}</div>
+      <div><strong>Área:</strong> ${escapeHTML(item.area)}</div>
+      <div><strong>CxC:</strong> ${escapeHTML(item.cxc)}</div>
+      <div><strong>Origen:</strong> ${escapeHTML(item.origen)}</div>
+      <div style="margin-top:8px; font-size:13px;">
+        📧 ${escapeHTML(item.correo || "—")} <br>
+        📱 ${escapeHTML(item.celular || "—")}
+      </div>
+    `;
+
+    cardsContainer.appendChild(card);
   });
 }
 
