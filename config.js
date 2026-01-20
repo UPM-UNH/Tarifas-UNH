@@ -17,7 +17,7 @@ const SHEET_CSV_URL =
  * Configuración general del widget
  */
 const CONFIG = {
-  PAGE_SIZE: 21,
+  PAGE_SIZE: 20,
   MONTO_MIN_DEFAULT: 0,
   MONTO_MAX_DEFAULT: 3000,
   PAIS_TELEFONO: "51", // Perú
