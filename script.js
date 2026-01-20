@@ -29,10 +29,6 @@ const cardsContainer = document.getElementById("cardsContainer");
 const statusEl = document.getElementById("status");
 const paginationEl = document.getElementById("pagination");
 
-const minMontoInput = document.getElementById("minMonto");
-const maxMontoInput = document.getElementById("maxMonto");
-const minMontoValue = document.getElementById("minMontoValue");
-const maxMontoValue = document.getElementById("maxMontoValue");
 const freeFilter = document.getElementById("freeFilter");
 
 /* Modal */
@@ -165,23 +161,6 @@ function loadCSV() {
 /* =======================
    FILTROS
 ======================= */
-
-function initMontoRange() {
-  const montos = data.map(d => d.monto);
-  const min = Math.min(...montos);
-  const max = Math.max(...montos);
-
-  minMontoInput.min = min;
-  minMontoInput.max = max;
-  maxMontoInput.min = min;
-  maxMontoInput.max = max;
-
-  minMontoInput.value = min;
-  maxMontoInput.value = max;
-
-  minMontoValue.textContent = min;
-  maxMontoValue.textContent = max;
-}
 
 function populateUnidadFilter() {
   const unidades = [...new Set(data.map(d => d.unidad).filter(Boolean))].sort();
