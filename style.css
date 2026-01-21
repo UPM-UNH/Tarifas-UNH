@@ -178,22 +178,23 @@ body {
 }
 
 .btn-mail {
-  background: #6d28d9;
+  background: #ea4335; /* Gmail Red */
   color: #fff;
 }
 
 .btn-mail:hover {
-  background: #5b21b6;
+  background: #d93025;
 }
 
 .btn-ws {
-  background: #25d366;
+  background: #25d366; /* WhatsApp Green */
   color: #fff;
 }
 
 .btn-ws:hover {
   background: #1ebe5d;
 }
+
 
 /* -------- PAGINACIÓN -------- */
 .pagination {
@@ -312,5 +313,10 @@ body {
   gap: 6px;
   font-size: 0.85rem;
   color: #374151;
+}
+.btn i {
+  margin-right: 6px;
+  font-size: 0.9em;
+  vertical-align: middle;
 }
 
