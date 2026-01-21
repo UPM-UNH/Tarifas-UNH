@@ -366,5 +366,111 @@ exportPdfBtn.onclick = () => {
 
   doc.save("Tarifario_UNH.pdf");
 };
+/* =======================
+   EXPORTACIÓN PDF
+======================= */
+
+exportPdfBtn.onclick = () => {
+  if (!filteredData.length) {
+    alert("No hay datos para exportar.");
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+
+  /* 1️⃣ Documento horizontal */
+  const doc = new jsPDF({
+    orientation: "landscape",
+    unit: "pt",
+    format: "a4"
+  });
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+
+  /* 2️⃣ Título dinámico */
+  const unidadSeleccionada = unidadFilter.value
+    ? `Unidad: ${unidadFilter.value}`
+    : "Todas las unidades";
+
+  doc.setFontSize(14);
+  doc.text("Tarifario TUPA / TUSNE – UNH", pageWidth / 2, 40, {
+    align: "center"
+  });
+
+  doc.setFontSize(10);
+  doc.text(unidadSeleccionada, pageWidth / 2, 58, {
+    align: "center"
+  });
+
+  /* 3️⃣ Mensaje previo a la tabla */
+  doc.setFontSize(9);
+  doc.setTextColor(90);
+
+  const warningText =
+    "⚠️ Los montos consignados corresponden a tarifas base y están sujetos " +
+    "al cobro de comisiones adicionales según la entidad recaudadora.";
+
+  doc.text(warningText, 40, 80, {
+    maxWidth: pageWidth - 80,
+    align: "left"
+  });
+
+  /* 4️⃣ Construcción de la tabla */
+  const tableData = filteredData.map(item => [
+    item.tarifa,
+    `S/ ${item.monto.toFixed(2)}`,
+    item.origen,
+    item.unidad,
+    item.requisitos
+  ]);
+
+  doc.autoTable({
+    startY: 110,
+    head: [[
+      "Tarifa",
+      "Monto",
+      "Origen",
+      "Unidad",
+      "Requisitos"
+    ]],
+    body: tableData,
+
+    /* 5️⃣ Anchos de columna */
+    columnStyles: {
+      0: { cellWidth: 180 }, // Tarifa
+      1: { cellWidth: 70 },  // Monto
+      2: { cellWidth: 90 },  // Origen
+      3: { cellWidth: 150 }, // Unidad
+      4: { cellWidth: "auto" } // Requisitos (más grande)
+    },
+
+    styles: {
+      fontSize: 8,
+      cellPadding: 4,
+      valign: "top"
+    },
+
+    headStyles: {
+      fillColor: [0, 56, 102],
+      textColor: 255,
+      fontStyle: "bold"
+    }
+  });
+
+  /* 6️⃣ Fecha y hora de exportación */
+  const fecha = new Date().toLocaleString("es-PE");
+
+  doc.setFontSize(8);
+  doc.setTextColor(120);
+  doc.text(
+    `Exportado el: ${fecha}`,
+    pageWidth - 40,
+    doc.internal.pageSize.getHeight() - 20,
+    { align: "right" }
+  );
+
+  /* 7️⃣ Guardar */
+  doc.save("tarifario_unh.pdf");
+};
 
 loadCSV();
