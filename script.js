@@ -172,6 +172,29 @@ function loadCSV() {
     skipEmptyLines: true,
     complete: res => {
       rawData = res.data || [];
+
+       const requiredCols = [
+     "origen",
+     "unidad",
+     "area",
+     "proceso",
+     "tarifa",
+     "monto",
+     "requisitos",
+     "correo",
+     "celular"
+      ];
+
+   const headers = Object.keys(rawData[0] || {}).map(normalizeKey);
+
+   const missing = requiredCols.filter(c => !headers.includes(c));
+
+   if (missing.length) {
+     statusEl.textContent =
+       "❌ Error en la base de datos. Faltan columnas: " +
+       missing.join(", ");
+     return;
+   }
       data = rawData.map(mapRow).filter(d => d.tarifa || d.proceso);
 
       if (!data.length) {
