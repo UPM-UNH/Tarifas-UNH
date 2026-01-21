@@ -29,8 +29,6 @@ const cardsContainer = document.getElementById("cardsContainer");
 const statusEl = document.getElementById("status");
 const paginationEl = document.getElementById("pagination");
 
-const freeFilter = document.getElementById("freeFilter");
-
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
