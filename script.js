@@ -403,30 +403,32 @@ exportPdfBtn.onclick = () => {
   });
 
   /* 3️⃣ Mensaje previo a la tabla */
-  doc.setFontSize(9);
-  doc.setTextColor(90);
+  doc.setFontSize(10);
+  doc.setTextColor(80);
 
   const warningText =
     "⚠️ Los montos consignados corresponden a tarifas base y están sujetos " +
     "al cobro de comisiones adicionales según la entidad recaudadora.";
 
-  doc.text(warningText, 40, 80, {
+  doc.text(warningText, 40, 82, {
     maxWidth: pageWidth - 80,
-    align: "left"
+    align: "center"
   });
 
   /* 4️⃣ Construcción de la tabla */
   const tableData = filteredData.map(item => [
-    item.tarifa,
-    `S/ ${item.monto.toFixed(2)}`,
-    item.origen,
-    item.unidad,
-    item.requisitos
-  ]);
+  item.proceso,
+  item.tarifa,
+  `S/ ${item.monto.toFixed(2)}`,
+  item.origen,
+  item.unidad,
+  item.requisitos
+]);
 
   doc.autoTable({
     startY: 110,
     head: [[
+      "Proceso",
       "Tarifa",
       "Monto",
       "Origen",
@@ -437,17 +439,19 @@ exportPdfBtn.onclick = () => {
 
     /* 5️⃣ Anchos de columna */
     columnStyles: {
-      0: { cellWidth: 180 }, // Tarifa
-      1: { cellWidth: 70 },  // Monto
-      2: { cellWidth: 90 },  // Origen
-      3: { cellWidth: 150 }, // Unidad
-      4: { cellWidth: "auto" } // Requisitos (más grande)
-    },
+     0: { cellWidth: 160 }, // Proceso
+     1: { cellWidth: 160 }, // Tarifa
+     2: { cellWidth: 60 },  // Monto (más pequeño)
+     3: { cellWidth: 60 },  // Origen (más pequeño)
+     4: { cellWidth: 140 }, // Unidad
+     5: { cellWidth: "auto" } // Requisitos (la más grande)
+   },
 
     styles: {
       fontSize: 8,
       cellPadding: 4,
-      valign: "top"
+      valign: "middle",
+      halign: "center"
     },
 
     headStyles: {
