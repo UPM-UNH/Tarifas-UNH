@@ -100,6 +100,34 @@ function formatRequisitosForPDF(text) {
     .join("\n");
 }
 
+function updateCanalOptions(item) {
+  const monto = item.monto;
+  const textoProceso = (item.proceso + " " + item.tarifa).toLowerCase();
+
+  Array.from(canalSelect.options).forEach(opt => {
+    opt.disabled = false;
+  });
+
+  // Caja UNH: solo si monto >= 20
+  canalSelect.querySelector('option[value="caja_unh"]').disabled = monto < 20;
+
+  // Banco Nación fijo: solo hasta 144
+  canalSelect.querySelector('option[value="bn_fijo"]').disabled = monto > 144;
+
+  // Banco Nación porcentaje: solo mayor a 144
+  canalSelect.querySelector('option[value="bn_pct"]').disabled = monto <= 144;
+
+  // Niubiz: solo si contiene "matrícula"
+  const esMatricula = textoProceso.includes("matricula") || textoProceso.includes("matrícula");
+  canalSelect.querySelector('option[value="niubiz"]').disabled = !esMatricula;
+
+  // Si la opción seleccionada quedó inválida, limpiar
+  if (canalSelect.selectedOptions[0]?.disabled) {
+    canalSelect.value = "";
+    estimationResult.textContent = "";
+  }
+}
+
 /* =======================
    MAPEO DE FILA
 ======================= */
@@ -295,7 +323,9 @@ function openModal(item) {
     .map(r => `<li>${escapeHTML(r)}</li>`)
     .join("")}</ul>`;
 
-  modalOverlay.classList.remove("hidden");
+   updateCanalOptions(item);
+   
+   modalOverlay.classList.remove("hidden");
 }
 
 /* =======================
