@@ -318,7 +318,9 @@ function renderCards(items) {
 function renderPagination(totalPages) {
   paginationEl.innerHTML = "";
   if (totalPages <= 1) return;
-
+  let maxVisible = 5;
+  let start = Math.max(1, currentPage - 2);
+  let end = Math.min(totalPages, start + maxVisible - 1);
   for (let i = 1; i <= totalPages; i++) {
     const b = document.createElement("button");
     b.textContent = i;
