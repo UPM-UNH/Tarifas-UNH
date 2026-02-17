@@ -201,6 +201,8 @@ body {
 .pagination {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* 🔥 permite salto de línea */
   gap: 6px;
   margin-top: 20px;
 }
