@@ -282,7 +282,8 @@ body {
 
 .modal-body ul {
   margin-top: 8px;
-  padding-left: 22px; /* 🔥 más espacio para viñeta */
+  padding-left: 24px;   /* 🔥 más espacio real */
+  list-style-position: outside; /* 🔥 asegura viñeta fuera del texto */
   list-style-type: disc; /* 🔥 fuerza viñeta */
 }
 
@@ -291,8 +292,9 @@ body {
   margin-bottom: 6px;
   line-height: 1.4;
 }
+
 .modal-body li::marker {
-  color: #003866;
+  color: #003866; /* azul institucional */
 }
 
 /* -------- CALCULADORA -------- */
