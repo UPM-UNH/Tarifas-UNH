@@ -140,19 +140,19 @@ function mapRow(row) {
   Object.keys(row).forEach(k => (r[normalizeKey(k)] = row[k]));
 
   return {
-    origen: r["origen"] || "",
-    unidad: r["unidad"] || "",
-    cxc: r["cxc"] || "",
-    area: r["area"] || "",
-    proceso: r["proceso"] || "",
-    tarifa: r["tarifa"] || "",
-    monto: parseMonto(r["monto"]),
-    montoRaw: r["monto"] || "",
-    requisitos: r["requisitos"] || "",
-    correo: r["correo"] || "",
-    celular: (r["celular"] || "").replace(/\D/g, "")
-  };
-}
+  origen: r["origen"] || "",
+  unidad: r["unidad"] || "",
+  cxc: r["cxc"] || "",
+  area: r["area"] || "",
+  proceso: r["proceso"] || "",
+  tarifa: r["tarifa"] || "",
+  monto: parseMonto(r["monto"]),
+  montoRaw: r["monto"] || "",
+  requisitos: r["requisitos"] || "",
+  correo: r["correo"] || "",
+  celular: (r["celular"] || "").replace(/\D/g, ""),
+  codigopago: r["codigopago"] || ""
+};
 
 /* =======================
    CARGA CSV
@@ -337,6 +337,7 @@ function renderPagination(totalPages) {
 
 function openModal(item) {
   modalTitle.dataset.monto = item.monto;
+  modalTitle.dataset.codigopago = item.codigopago || "";
   modalTitle.textContent = item.proceso || item.tarifa;
   modalUnidad.textContent = item.unidad;
   modalArea.textContent = item.area;
@@ -373,37 +374,60 @@ if (freeFilter) {
 ======================= */
 
 canalSelect.onchange = () => {
-  const monto = parseFloat(
-    modalTitle.dataset.monto || 0
-  );
+  const monto = parseFloat(modalTitle.dataset.monto || 0);
+  const codigosRaw = modalTitle.dataset.codigopago || "";
 
   let comision = 0;
+  let codigoMostrar = "";
+  let mensajeEspecial = "";
 
   switch (canalSelect.value) {
     case "caja_unh":
       comision = monto >= 20 ? 1 : 0;
+      codigoMostrar = codigosRaw.split(/\r?\n/)[0] || "";
       break;
+
     case "caja_unh_gratis":
-       comision = 0;
-       break;
+      comision = 0;
+      mensajeEspecial = "Este servicio no requiere código de pago.";
+      break;
+
     case "bn_fijo":
-      comision = monto <= 144 ? 1.8 : 0;
-      break;
     case "bn_pct":
-      comision = monto > 144 ? monto * 0.0125 : 0;
+      comision = canalSelect.value === "bn_fijo"
+        ? (monto <= 144 ? 1.8 : 0)
+        : (monto > 144 ? monto * 0.0125 : 0);
+      codigoMostrar = codigosRaw.split(/\r?\n/)[1] || "";
       break;
+
     case "caja_huancayo":
       comision = 1;
+      codigoMostrar = codigosRaw.split(/\r?\n/)[2] || "";
       break;
+
     case "niubiz":
       comision = monto * 0.058;
+      mensajeEspecial = "Pago mediante cupón generado en SISADES.";
       break;
+  }
+
+  let bloqueCodigo = "";
+
+  if (mensajeEspecial) {
+    bloqueCodigo = `<br><strong>${mensajeEspecial}</strong>`;
+  } else if (monto === 0) {
+    bloqueCodigo = `<br><strong>Este servicio no requiere pago.</strong>`;
+  } else if (codigoMostrar) {
+    bloqueCodigo = `<br><strong>Código de pago:</strong> ${codigoMostrar}`;
+  } else if (!codigoMostrar && monto > 0) {
+    bloqueCodigo = `<br><strong>Código de pago en proceso de asignación.</strong>`;
   }
 
   estimationResult.innerHTML = `
     <strong>Monto base:</strong> S/ ${monto.toFixed(2)}<br>
     <strong>Comisión:</strong> S/ ${comision.toFixed(2)}<br>
     <strong>Total estimado:</strong> <b>S/ ${(monto + comision).toFixed(2)}</b>
+    ${bloqueCodigo}
   `;
 };
 
