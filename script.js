@@ -153,7 +153,7 @@ function mapRow(row) {
   celular: (r["celular"] || "").replace(/\D/g, ""),
   codigopago: r["codigopago"] || ""
 };
-
+}
 /* =======================
    CARGA CSV
 ======================= */
