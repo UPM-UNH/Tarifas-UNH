@@ -52,6 +52,9 @@ let rawData = [];
 let data = [];
 let filteredData = [];
 let fuse = null;
+let modoActual = null; // "general" | "posgrado"
+let facultadSeleccionada = null;
+let dataContexto = []; // Data filtrada según modo
 
 const pageSize = CONFIG?.PAGE_SIZE || 21;
 let currentPage = 1;
@@ -151,12 +154,84 @@ function mapRow(row) {
   requisitos: r["requisitos"] || "",
   correo: r["correo"] || "",
   celular: (r["celular"] || "").replace(/\D/g, ""),
-  codigopago: r["codigopago"] || ""
+  codigopago: r["codigopago"] || "",
+  posgrado: r["posgrado"] || "",
+  pregrado: r["pregrado"] || "",
+  externo: r["externo"] || "",
+  trabajadorunh: r["trabajadorunh"] || ""
 };
 }
 /* =======================
    CARGA CSV
 ======================= */
+function mostrarPantallaInicial() {
+  modoActual = null;
+  facultadSeleccionada = null;
+  cardsContainer.innerHTML = `
+    <div style="text-align:center; margin-top:40px;">
+      <h3>Seleccione el tipo de servicio</h3>
+      <button class="btn" onclick="activarModoGeneral()">
+        Pregrado y Servicios Institucionales
+      </button>
+      <button class="btn" onclick="activarModoPosgrado()" style="margin-left:15px;">
+        Posgrado
+      </button>
+    </div>
+  `;
+  paginationEl.innerHTML = "";
+}
+
+function activarModoGeneral() {
+  modoActual = "general";
+
+  dataContexto = data.filter(d =>
+    d.pregrado === "X" ||
+    d.externo === "X" ||
+    d.trabajadorunh === "X"
+  );
+
+  filteredData = [...dataContexto];
+  renderPage(1);
+}
+
+function activarModoPosgrado() {
+  modoActual = "posgrado";
+  mostrarSelectorFacultad();
+}
+
+function mostrarSelectorFacultad() {
+  const facultades = [...new Set(
+    data
+      .filter(d => d.posgrado === "X")
+      .map(d => d.area)
+  )].sort();
+
+  cardsContainer.innerHTML = `
+    <div style="text-align:center; margin-top:40px;">
+      <h3>Seleccione Facultad</h3>
+      <select onchange="seleccionarFacultad(this.value)">
+        <option value="">Seleccione</option>
+        ${facultades.map(f => `<option value="${f}">${f}</option>`).join("")}
+      </select>
+    </div>
+  `;
+
+  paginationEl.innerHTML = "";
+}
+
+function seleccionarFacultad(facultad) {
+  if (!facultad) return;
+
+  facultadSeleccionada = facultad;
+
+  dataContexto = data.filter(d =>
+    d.posgrado === "X" &&
+    d.area === facultad
+  );
+
+  filteredData = [...dataContexto];
+  renderPage(1);
+}
 
 function loadCSV() {
   if (!CSV_URL) {
@@ -239,7 +314,7 @@ function applyFilters() {
   const unidad = unidadFilter.value;
   const soloGratis = freeFilter?.checked;
 
-  let results = [...data];
+  let results = modoActual ? [...dataContexto] : [...data];
 
   if (q.length >= 2) {
     results = fuse.search(q).map(r => r.item);
@@ -610,3 +685,4 @@ doc.text(
 };
 
 loadCSV();
+setTimeout(mostrarPantallaInicial, 800);
