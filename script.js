@@ -63,6 +63,25 @@ let currentPage = 1;
    UTILIDADES
 ======================= */
 
+function volverInicio() {
+  modoActual = null;
+  facultadSeleccionada = null;
+  dataContexto = [];
+  filteredData = [];
+
+  // Limpiar filtros
+  searchInput.value = "";
+  unidadFilter.value = "";
+  if (typeof freeFilter !== "undefined" && freeFilter) {
+    freeFilter.checked = false;
+  }
+
+  // Limpiar selector unidad
+  unidadFilter.innerHTML = `<option value="">Unidad Responsable</option>`;
+
+  mostrarPantallaInicial();
+}
+
 function normalizeKey(str) {
   return str
     .toString()
@@ -165,8 +184,6 @@ function mapRow(row) {
    CARGA CSV
 ======================= */
 function mostrarPantallaInicial() {
-  modoActual = null;
-  facultadSeleccionada = null;
   cardsContainer.innerHTML = `
     <div style="text-align:center; margin-top:40px;">
       <h3>Seleccione el tipo de servicio</h3>
@@ -178,6 +195,7 @@ function mostrarPantallaInicial() {
       </button>
     </div>
   `;
+
   paginationEl.innerHTML = "";
 }
 
@@ -185,13 +203,19 @@ function activarModoGeneral() {
   modoActual = "general";
 
   dataContexto = data.filter(d =>
-    d.pregrado === "X" ||
-    d.externo === "X" ||
-    d.trabajadorunh === "X"
+    (
+      d.pregrado === "X" ||
+      d.externo === "X" ||
+      d.trabajadorunh === "X"
+    )
+    &&
+    !normalizeKey(d.unidad).startsWith("upg")
   );
 
   filteredData = [...dataContexto];
-  renderPage(1);
+
+  populateUnidadFilter();
+  applyFilters();
 }
 
 function activarModoPosgrado() {
@@ -208,11 +232,21 @@ function mostrarSelectorFacultad() {
 
   cardsContainer.innerHTML = `
     <div style="text-align:center; margin-top:40px;">
+      <button class="btn" onclick="volverInicio()" style="margin-bottom:20px;">
+        ← Volver
+      </button>
       <h3>Seleccione Facultad</h3>
-      <select onchange="seleccionarFacultad(this.value)">
-        <option value="">Seleccione</option>
-        ${facultades.map(f => `<option value="${f}">${f}</option>`).join("")}
-      </select>
+      <div style="margin-top:20px;">
+        <button class="btn" onclick="seleccionarFacultad('todas')">
+          Todas
+        </button>
+        ${facultades.map(f => `
+          <button class="btn" style="margin:5px;"
+            onclick="seleccionarFacultad('${f}')">
+            ${f}
+          </button>
+        `).join("")}
+      </div>
     </div>
   `;
 
@@ -220,17 +254,21 @@ function mostrarSelectorFacultad() {
 }
 
 function seleccionarFacultad(facultad) {
-  if (!facultad) return;
-
   facultadSeleccionada = facultad;
 
-  dataContexto = data.filter(d =>
-    d.posgrado === "X" &&
-    d.area === facultad
-  );
+  if (facultad === "todas") {
+    dataContexto = data.filter(d => d.posgrado === "X");
+  } else {
+    dataContexto = data.filter(d =>
+      d.posgrado === "X" &&
+      d.area === facultad
+    );
+  }
 
   filteredData = [...dataContexto];
-  renderPage(1);
+
+  populateUnidadFilter();
+  applyFilters();
 }
 
 function loadCSV() {
@@ -299,8 +337,12 @@ function loadCSV() {
 ======================= */
 
 function populateUnidadFilter() {
-  const unidades = [...new Set(data.map(d => d.unidad).filter(Boolean))].sort();
+  const unidades = [...new Set(
+    dataContexto.map(d => d.unidad).filter(Boolean)
+  )].sort();
+
   unidadFilter.innerHTML = `<option value="">Unidad Responsable</option>`;
+
   unidades.forEach(u => {
     const opt = document.createElement("option");
     opt.value = u;
@@ -353,8 +395,17 @@ function renderPage(page) {
 function renderCards(items) {
   cardsContainer.innerHTML = "";
 
+  if (modoActual) {
+    const volverBtn = document.createElement("button");
+    volverBtn.className = "btn";
+    volverBtn.textContent = "← Volver";
+    volverBtn.style.marginBottom = "20px";
+    volverBtn.onclick = volverInicio;
+    cardsContainer.appendChild(volverBtn);
+  }
+
   if (!items.length) {
-    cardsContainer.innerHTML = `<div class="status">No hay resultados.</div>`;
+    cardsContainer.innerHTML += `<div class="status">No hay resultados.</div>`;
     return;
   }
 
