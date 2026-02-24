@@ -207,8 +207,7 @@ function activarModoGeneral() {
       d.pregrado === "X" ||
       d.externo === "X" ||
       d.trabajadorunh === "X"
-    )
-    &&
+    ) &&
     !normalizeKey(d.unidad).startsWith("upg")
   );
 
@@ -338,7 +337,10 @@ function loadCSV() {
 
 function populateUnidadFilter() {
   const unidades = [...new Set(
-    dataContexto.map(d => d.unidad).filter(Boolean)
+    dataContexto
+      .filter(d => d.unidad === "X") // 🔹 Solo unidades marcadas con X
+      .map(d => d.area)              // 🔹 O la columna correcta si es otra
+      .filter(Boolean)
   )].sort();
 
   unidadFilter.innerHTML = `<option value="">Unidad Responsable</option>`;
@@ -356,15 +358,22 @@ function applyFilters() {
   const unidad = unidadFilter.value;
   const soloGratis = freeFilter?.checked;
 
-  let results = modoActual ? [...dataContexto] : [...data];
+  let results = [...dataContexto];
 
+  // 🔎 Búsqueda SOLO dentro del contexto actual
   if (q.length >= 2) {
-    results = fuse.search(q).map(r => r.item);
+    const fuseLocal = new Fuse(dataContexto, {
+      keys: ["proceso", "tarifa", "unidad", "area"],
+      threshold: 0.35
+    });
+
+    results = fuseLocal.search(q).map(r => r.item);
   }
 
   if (unidad) {
     results = results.filter(d =>
-  normalizeKey(d.unidad) === normalizeKey(unidad));
+      normalizeKey(d.unidad) === normalizeKey(unidad)
+    );
   }
 
   if (soloGratis) {
