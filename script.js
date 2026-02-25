@@ -253,6 +253,7 @@ function activarModoPosgrado() {
 }
 
 function mostrarSelectorFacultad() {
+cardsContainer.classList.remove("cards");
 cardsContainer.classList.add("facultad-mode");
   const facultades = [...new Set(
     data
@@ -300,7 +301,8 @@ cardsContainer.classList.add("facultad-mode");
 
 function seleccionarFacultad(facultad) {
 
-  cardsContainer.classList.remove("facultad-mode");
+ cardsContainer.classList.remove("cards");
+ cardsContainer.classList.add("facultad-mode");
 
   controlsSection.classList.remove("hidden");
   warningSection.classList.remove("hidden");
