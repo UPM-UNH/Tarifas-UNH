@@ -286,19 +286,39 @@ cardsContainer.classList.add("facultad-mode");
 }
 
 function seleccionarFacultad(facultad) {
+
   cardsContainer.classList.remove("facultad-mode");
   cardsContainer.classList.add("cards");
+
   controlsSection.classList.remove("hidden");
   warningSection.classList.remove("hidden");
+
   facultadSeleccionada = facultad;
 
   if (facultad === "todas") {
-    dataContexto = data.filter(d => d.posgrado === "X");
-  } else {
+
     dataContexto = data.filter(d =>
-      d.posgrado === "X" &&
-      d.area === facultad
+      d.posgrado === "X"
     );
+
+  } else {
+
+    dataContexto = data.filter(d => {
+
+      if (d.posgrado !== "X") return false;
+
+      const areaNormalizada = normalizeKey(d.area);
+
+      const esOtraUPG =
+        areaNormalizada.startsWith("upg") &&
+        d.area !== facultad;
+
+      return (
+        d.area === facultad ||  // propia facultad
+        !areaNormalizada.startsWith("upg")  // generales
+      );
+    });
+
   }
 
   filteredData = [...dataContexto];
