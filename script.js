@@ -230,23 +230,22 @@ function activarModoGeneral() {
 
 function activarModoPosgrado() {
 
-  // Ocultar pantalla inicial
   serviceSelection.classList.add("hidden");
 
-  // Asegurar que controles estén ocultos
   controlsSection.classList.add("hidden");
-
-  // Ocultar advertencia hasta que se elija facultad
   warningSection.classList.add("hidden");
 
-  // Ocultar filtros generales
   if (generalFilters) {
     generalFilters.classList.add("hidden");
   }
 
+  // 🔥 ASEGURAR QUE EL CONTENEDOR ESTÉ VISIBLE
+  cardsContainer.classList.remove("hidden");
+  paginationEl.classList.add("hidden");
+  statusEl.classList.add("hidden");
+
   modoActual = "posgrado";
 
-  // Limpiar contenedor antes de renderizar
   cardsContainer.innerHTML = "";
 
   mostrarSelectorFacultad();
@@ -254,8 +253,6 @@ function activarModoPosgrado() {
 
 function mostrarSelectorFacultad() {
 cardsContainer.classList.add("facultad-mode");
-console.log("Total registros:", data.length);
-console.log("Posgrado detectados:", data.filter(d => d.posgrado === "X").length);
   const facultades = [...new Set(
     data
       .filter(d =>
