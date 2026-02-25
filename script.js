@@ -28,6 +28,8 @@ const exportPdfBtn = document.getElementById("exportPdfBtn");
 const cardsContainer = document.getElementById("cardsContainer");
 const statusEl = document.getElementById("status");
 const paginationEl = document.getElementById("pagination");
+const controlsSection = document.getElementById("controlsSection");
+const warningSection = document.getElementById("warningSection");
 
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
@@ -64,6 +66,8 @@ let currentPage = 1;
 ======================= */
 
 function volverInicio() {
+  controlsSection.classList.add("hidden");
+  warningSection.classList.add("hidden");
   modoActual = null;
   facultadSeleccionada = null;
   dataContexto = [];
@@ -184,6 +188,8 @@ function mapRow(row) {
    CARGA CSV
 ======================= */
 function mostrarPantallaInicial() {
+  controlsSection.classList.add("hidden");
+  warningSection.classList.add("hidden");
   cardsContainer.innerHTML = `
     <div style="text-align:center; margin-top:40px;">
       <h3>Seleccione el tipo de servicio</h3>
@@ -200,6 +206,8 @@ function mostrarPantallaInicial() {
 }
 
 function activarModoGeneral() {
+  controlsSection.classList.remove("hidden");
+  warningSection.classList.remove("hidden");
   modoActual = "general";
 
   dataContexto = data.filter(d =>
@@ -257,6 +265,8 @@ function mostrarSelectorFacultad() {
 }
 
 function seleccionarFacultad(facultad) {
+  controlsSection.classList.remove("hidden");
+  warningSection.classList.remove("hidden");
   facultadSeleccionada = facultad;
 
   if (facultad === "todas") {
