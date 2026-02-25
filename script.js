@@ -234,7 +234,9 @@ function activarModoPosgrado() {
 
   controlsSection.classList.add("hidden");
   warningSection.classList.add("hidden");
-
+  document.body.style.background = "red";
+  cardsContainer.style.background = "yellow";
+   
   if (generalFilters) {
     generalFilters.classList.add("hidden");
   }
