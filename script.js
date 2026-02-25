@@ -421,18 +421,14 @@ function populateUnidadFilter() {
   });
 }
 
-function applyFilters() { 
+function applyFilters() {
 
   const q = searchInput.value.trim();
   const unidad = unidadFilter.value;
   const soloGratis = freeFilter?.checked;
 
-  // 🔥 SIEMPRE partir del contexto ya filtrado
   let baseData = [...dataContexto];
 
-  // =========================
-  // FILTROS SOLO PARA GENERAL
-  // =========================
   if (modoActual === "general") {
 
     const filtrosActivos = [];
@@ -450,7 +446,6 @@ function applyFilters() {
 
   let results = [...baseData];
 
-  // 🔎 Buscador dentro del contexto
   if (q.length >= 2) {
     const fuseLocal = new Fuse(baseData, {
       keys: ["proceso", "tarifa", "unidad", "area"],
@@ -459,39 +454,34 @@ function applyFilters() {
     results = fuseLocal.search(q).map(r => r.item);
   }
 
-  // 🏢 Filtro unidad
   if (unidad) {
     results = results.filter(d =>
       normalizeKey(d.unidad) === normalizeKey(unidad)
     );
   }
 
-  // 💸 Gratis
   if (soloGratis) {
     results = results.filter(d => d.monto === 0);
   }
 
   results.sort((a, b) => {
 
-  // 🔥 PRIORIDAD 1: En modo posgrado, los que empiezan con UPG primero
-  if (modoActual === "posgrado") {
+    if (modoActual === "posgrado") {
+      const aEsUPG = normalizeKey(a.area).startsWith("upg");
+      const bEsUPG = normalizeKey(b.area).startsWith("upg");
 
-    const aEsUPG = normalizeKey(a.area).startsWith("upg");
-    const bEsUPG = normalizeKey(b.area).startsWith("upg");
+      if (aEsUPG && !bEsUPG) return -1;
+      if (!aEsUPG && bEsUPG) return 1;
+    }
 
-    if (aEsUPG && !bEsUPG) return -1;
-    if (!aEsUPG && bEsUPG) return 1;
-  }
+    if (a.origen.toLowerCase() === "tupa" &&
+        b.origen.toLowerCase() !== "tupa") return -1;
 
-  // 🔥 PRIORIDAD 2: Origen TUPA antes que TUSNE
-  if (a.origen.toLowerCase() === "tupa" &&
-      b.origen.toLowerCase() !== "tupa") return -1;
+    if (b.origen.toLowerCase() === "tupa" &&
+        a.origen.toLowerCase() !== "tupa") return 1;
 
-  if (b.origen.toLowerCase() === "tupa" &&
-      a.origen.toLowerCase() !== "tupa") return 1;
-
-  return 0;
-});
+    return 0;
+  });
 
   filteredData = results;
   renderPage(1);
