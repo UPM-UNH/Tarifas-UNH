@@ -33,36 +33,16 @@ const warningSection = document.getElementById("warningSection");
 const serviceSelection = document.getElementById("serviceSelection");
 const btnPregrado = document.getElementById("btnPregrado");
 const btnPosgrado = document.getElementById("btnPosgrado");
-// Ocultar sistema al iniciar
-warningSection.classList.add("hidden");
-controlsSection.classList.add("hidden");
-cardsContainer.classList.add("hidden");
-paginationEl.classList.add("hidden");
-statusEl.classList.add("hidden");
-
-function mostrarSistema(tipo) {
-
-  // Ocultar pantalla inicial
-  serviceSelection.classList.add("hidden");
-
-  // Mostrar sistema
-  warningSection.classList.remove("hidden");
-  controlsSection.classList.remove("hidden");
-  cardsContainer.classList.remove("hidden");
-  paginationEl.classList.remove("hidden");
-  statusEl.classList.remove("hidden");
-
-  console.log("Sistema cargado para:", tipo);
-}
 
 btnPregrado.addEventListener("click", () => {
-  mostrarSistema("pregrado");
+  serviceSelection.classList.add("hidden");
+  activarModoGeneral();
 });
 
 btnPosgrado.addEventListener("click", () => {
-  mostrarSistema("posgrado");
+  serviceSelection.classList.add("hidden");
+  activarModoPosgrado();
 });
-
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
@@ -220,20 +200,10 @@ function mapRow(row) {
    CARGA CSV
 ======================= */
 function mostrarPantallaInicial() {
+  serviceSelection.classList.remove("hidden");
   controlsSection.classList.add("hidden");
   warningSection.classList.add("hidden");
-  cardsContainer.innerHTML = `
-    <div style="text-align:center; margin-top:40px;">
-      <h3>Seleccione el tipo de servicio</h3>
-      <button class="btn" onclick="activarModoGeneral()">
-        Pregrado y Servicios Institucionales
-      </button>
-      <button class="btn" onclick="activarModoPosgrado()" style="margin-left:15px;">
-        Posgrado
-      </button>
-    </div>
-  `;
-
+  cardsContainer.innerHTML = "";
   paginationEl.innerHTML = "";
 }
 
@@ -775,4 +745,3 @@ doc.text(
 };
 
 loadCSV();
-setTimeout(mostrarPantallaInicial, 800);
