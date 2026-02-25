@@ -465,26 +465,6 @@ function applyFilters() {
   renderPage(1);
 }
 
-  // 🏢 Filtro unidad
-  if (unidad) {
-    results = results.filter(d =>
-      normalizeKey(d.unidad) === normalizeKey(unidad)
-    );
-  }
-
-  // 💸 Gratis
-  if (soloGratis) {
-    results = results.filter(d => d.monto === 0);
-  }
-
-  results.sort((a, b) =>
-    a.origen.toLowerCase() === "tupa" ? -1 : 1
-  );
-
-  filteredData = results;
-  renderPage(1);
-}
-
 
 /* =======================
    RENDER
