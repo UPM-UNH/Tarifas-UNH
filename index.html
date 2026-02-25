@@ -69,23 +69,42 @@
   </div>
 
   <div class="filters-wrap">
+
+  <div class="filters-left">
+
     <select id="unidadFilter" class="filter-select">
       <option value="">Unidad Responsable</option>
     </select>
 
-    <label class="filter-checkbox">
-      <input type="checkbox" id="freeFilter">
-      Mostrar solo tarifas gratuitas
-    </label>
-    <div id="generalFilters" class="extra-filters hidden">
-    <label><input type="checkbox" id="chkPregrado"> Pregrado</label>
-    <label><input type="checkbox" id="chkExterno"> Externo</label>
-    <label><input type="checkbox" id="chkTrabajador"> Trabajador UNH</label>
+    <div id="generalFilters" class="general-filters">
+
+      <label class="toggle">
+        <input type="checkbox" id="freeFilter">
+        <span>Gratis</span>
+      </label>
+
+      <label class="toggle">
+        <input type="checkbox" id="chkPregrado">
+        <span>Pregrado</span>
+      </label>
+
+      <label class="toggle">
+        <input type="checkbox" id="chkExterno">
+        <span>Externo</span>
+      </label>
+
+      <label class="toggle">
+        <input type="checkbox" id="chkTrabajador">
+        <span>Trabajador UNH</span>
+      </label>
+
     </div>
-    <button id="exportPdfBtn" class="btn-export">
-      <i class="bi bi-file-earmark-pdf-fill"></i> Exportar PDF
-    </button>
+
   </div>
+
+  <button id="exportPdfBtn" class="btn-export">
+    <i class="bi bi-file-earmark-pdf-fill"></i> Exportar PDF
+  </button>
 
 </div>
 
