@@ -253,7 +253,7 @@ function activarModoPosgrado() {
 }
 
 function mostrarSelectorFacultad() {
-console.log("Facultades encontradas:", facultades.length);
+
 cardsContainer.classList.remove("cards");
 cardsContainer.classList.add("facultad-mode");
   const facultades = [...new Set(
@@ -265,7 +265,7 @@ cardsContainer.classList.add("facultad-mode");
       .map(d => d.area)
       .filter(Boolean)
   )].sort();
-
+console.log("Facultades encontradas:", facultades.length);
   cardsContainer.innerHTML = `
     <div class="facultad-selector">
 
