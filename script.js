@@ -225,8 +225,12 @@ function activarModoPosgrado() {
 function mostrarSelectorFacultad() {
   const facultades = [...new Set(
     data
-      .filter(d => d.posgrado === "X")
+      .filter(d =>
+        d.posgrado === "X" &&
+        normalizeKey(d.area).startsWith("upg")
+      )
       .map(d => d.area)
+      .filter(Boolean)
   )].sort();
 
   cardsContainer.innerHTML = `
@@ -338,8 +342,7 @@ function loadCSV() {
 function populateUnidadFilter() {
   const unidades = [...new Set(
     dataContexto
-      .filter(d => d.unidad === "X") // 🔹 Solo unidades marcadas con X
-      .map(d => d.area)              // 🔹 O la columna correcta si es otra
+      .map(d => d.unidad)
       .filter(Boolean)
   )].sort();
 
