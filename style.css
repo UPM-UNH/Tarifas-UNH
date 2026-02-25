@@ -177,13 +177,19 @@ body {
 
 .btn {
   flex: 1;
-  padding: 8px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 0.8rem;
-  text-align: center;
   text-decoration: none;
   cursor: pointer;
   border: none;
+  padding: 10px 8px;
+  min-height: 60px;              /* 🔥 misma altura para todos */
+  display: flex;                 /* 🔥 activamos flex */
+  flex-direction: column;        /* icono arriba / texto abajo */
+  justify-content: center;       /* 🔥 centra verticalmente */
+  align-items: center;           /* 🔥 centra horizontalmente */
+  text-align: center;
+  gap: 4px;
 }
 
 .btn-requisitos {
@@ -359,14 +365,6 @@ body {
 
 }
 /* -------- BOTONES GENERALES -------- */
-.btn {
-  background: #003866;
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px 16px;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
 
 .btn:hover {
   background: #002f57;
