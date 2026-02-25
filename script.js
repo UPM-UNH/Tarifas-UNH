@@ -254,6 +254,8 @@ function activarModoPosgrado() {
 
 function mostrarSelectorFacultad() {
 cardsContainer.classList.add("facultad-mode");
+console.log("Total registros:", data.length);
+console.log("Posgrado detectados:", data.filter(d => d.posgrado === "X").length);
   const facultades = [...new Set(
     data
       .filter(d =>
