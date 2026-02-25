@@ -567,7 +567,3 @@ body {
     width: 100%;
   }
 }
-#cardsContainer {
-  min-height: 400px !important;
-  background: yellow !important;
-}
