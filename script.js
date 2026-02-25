@@ -457,9 +457,27 @@ function applyFilters() {
     results = results.filter(d => d.monto === 0);
   }
 
-  results.sort((a, b) =>
-    a.origen.toLowerCase() === "tupa" ? -1 : 1
-  );
+  results.sort((a, b) => {
+
+  // 🔥 PRIORIDAD 1: En modo posgrado, los que empiezan con UPG primero
+  if (modoActual === "posgrado") {
+
+    const aEsUPG = normalizeKey(a.area).startsWith("upg");
+    const bEsUPG = normalizeKey(b.area).startsWith("upg");
+
+    if (aEsUPG && !bEsUPG) return -1;
+    if (!aEsUPG && bEsUPG) return 1;
+  }
+
+  // 🔥 PRIORIDAD 2: Origen TUPA antes que TUSNE
+  if (a.origen.toLowerCase() === "tupa" &&
+      b.origen.toLowerCase() !== "tupa") return -1;
+
+  if (b.origen.toLowerCase() === "tupa" &&
+      a.origen.toLowerCase() !== "tupa") return 1;
+
+  return 0;
+});
 
   filteredData = results;
   renderPage(1);
