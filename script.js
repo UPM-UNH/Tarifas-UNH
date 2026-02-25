@@ -37,14 +37,11 @@ const generalFilters = document.getElementById("generalFilters");
 const chkPregrado = document.getElementById("chkPregrado");
 const chkExterno = document.getElementById("chkExterno");
 const chkTrabajador = document.getElementById("chkTrabajador");
-btnPregrado.addEventListener("click", () => {
-  serviceSelection.classList.add("hidden");
-  activarModoGeneral();
+
+btnPregrado.addEventListener("click", activarModoGeneral);
 });
 
-btnPosgrado.addEventListener("click", () => {
-  serviceSelection.classList.add("hidden");
-  activarModoPosgrado();
+btnPosgrado.addEventListener("click", activarModoPosgrado);
 });
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
@@ -214,6 +211,7 @@ function activarModoGeneral() {
   controlsSection.classList.remove("hidden");
   warningSection.classList.remove("hidden");
   generalFilters.classList.remove("hidden");
+  serviceSelection.classList.add("hidden");
   modoActual = "general";
   
 
@@ -233,8 +231,26 @@ function activarModoGeneral() {
 }
 
 function activarModoPosgrado() {
-   generalFilters.classList.add("hidden");
-   modoActual = "posgrado";
+
+  // Ocultar pantalla inicial
+  serviceSelection.classList.add("hidden");
+
+  // Asegurar que controles estén ocultos
+  controlsSection.classList.add("hidden");
+
+  // Ocultar advertencia hasta que se elija facultad
+  warningSection.classList.add("hidden");
+
+  // Ocultar filtros generales
+  if (generalFilters) {
+    generalFilters.classList.add("hidden");
+  }
+
+  modoActual = "posgrado";
+
+  // Limpiar contenedor antes de renderizar
+  cardsContainer.innerHTML = "";
+
   mostrarSelectorFacultad();
 }
 
