@@ -382,25 +382,61 @@ function populateUnidadFilter() {
 }
 
 function applyFilters() { 
-const q = searchInput.value.trim();
-const unidad = unidadFilter.value;
-const soloGratis = freeFilter?.checked; 
 
-let results = modoActual ? [...dataContexto] : [...data];
+  const q = searchInput.value.trim();
+  const unidad = unidadFilter.value;
+  const soloGratis = freeFilter?.checked;
 
-if (q.length >= 2) {
- results = fuse.search(q).map(r => r.item);
-} 
-if (unidad) { 
-results = results.filter(d => normalizeKey(d.unidad) === normalizeKey(unidad)); 
-} 
-if (soloGratis) { 
-results = results.filter(d => d.monto === 0);
-} 
+  // 🔥 Base según modo
+  let baseData = [];
 
-results.sort((a, b) => a.origen.toLowerCase() === "tupa" ? -1 : 1 );
- 
-filteredData = results; renderPage(1); 
+  if (modoActual === "general") {
+    baseData = data.filter(d =>
+      d.pregrado === "X" ||
+      d.externo === "X" ||
+      d.trabajadorunh === "X"
+    );
+  }
+
+  else if (modoActual === "posgrado") {
+    baseData = data.filter(d =>
+      d.posgrado === "X"
+    );
+  }
+
+  else {
+    baseData = [...data];
+  }
+
+  let results = [...baseData];
+
+  // 🔎 Buscador (solo dentro del contexto)
+  if (q.length >= 2) {
+    const fuseLocal = new Fuse(baseData, {
+      keys: ["proceso", "tarifa", "unidad", "area"],
+      threshold: 0.35
+    });
+    results = fuseLocal.search(q).map(r => r.item);
+  }
+
+  // 🏢 Filtro unidad
+  if (unidad) {
+    results = results.filter(d =>
+      normalizeKey(d.unidad) === normalizeKey(unidad)
+    );
+  }
+
+  // 💸 Gratis
+  if (soloGratis) {
+    results = results.filter(d => d.monto === 0);
+  }
+
+  results.sort((a, b) =>
+    a.origen.toLowerCase() === "tupa" ? -1 : 1
+  );
+
+  filteredData = results;
+  renderPage(1);
 }
 
 
