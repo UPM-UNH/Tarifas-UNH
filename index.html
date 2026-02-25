@@ -26,30 +26,21 @@
 
 <div class="container">
 
-  <!-- CONTROLES -->
+  <div id="warningSection" class="tarifa-warning hidden">
+    ⚠️ Las tarifas están sujetas a actualización.
+  </div>
+
   <div id="controlsSection" class="controls hidden">
+    ...
+  </div>
 
-    <!-- Buscador -->
-    <div class="search-wrap">
-      <input id="searchInput" type="text"
-             placeholder="Buscar por tarifa, proceso, unidad o área…" />
-    </div>
+  <div id="cardsContainer" class="cards"></div>
 
-    <!-- Filtros -->
-    <div class="filters-wrap">
-      <select id="unidadFilter" class="filter-select">
-        <option value="">Unidad Responsable</option>
-      </select>
+  <div id="pagination" class="pagination"></div>
 
-    <label class="filter-checkbox">
-      <input type="checkbox" id="freeFilter">
-        Mostrar solo tarifas gratuitas
-      </label>
+  <div id="status" class="status"></div>
 
-      <button id="exportPdfBtn" class="btn-export">
-        <i class="bi bi-file-earmark-pdf-fill"></i> Exportar PDF
-      </button>
-    </div>
+</div>
 
   <!-- ESTADO -->
   <div id="status" class="status"></div>
