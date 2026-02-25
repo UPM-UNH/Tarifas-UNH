@@ -31,8 +31,28 @@
   </div>
 
   <div id="controlsSection" class="controls hidden">
-    ...
+
+  <div class="search-wrap">
+    <input id="searchInput" type="text"
+           placeholder="Buscar por tarifa, proceso, unidad o área…" />
   </div>
+
+  <div class="filters-wrap">
+    <select id="unidadFilter" class="filter-select">
+      <option value="">Unidad Responsable</option>
+    </select>
+
+    <label class="filter-checkbox">
+      <input type="checkbox" id="freeFilter">
+      Mostrar solo tarifas gratuitas
+    </label>
+
+    <button id="exportPdfBtn" class="btn-export">
+      <i class="bi bi-file-earmark-pdf-fill"></i> Exportar PDF
+    </button>
+  </div>
+
+</div>
 
   <div id="cardsContainer" class="cards"></div>
 
