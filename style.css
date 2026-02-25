@@ -515,3 +515,8 @@ body {
   color: #003866;
   font-weight: 500;
 }
+.facultad-mode {
+  width: 100%;
+  display: flex;
+  justify-content: center;  /* 🔥 Centra el selector */
+}
