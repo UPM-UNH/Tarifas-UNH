@@ -30,6 +30,38 @@ const statusEl = document.getElementById("status");
 const paginationEl = document.getElementById("pagination");
 const controlsSection = document.getElementById("controlsSection");
 const warningSection = document.getElementById("warningSection");
+const serviceSelection = document.getElementById("serviceSelection");
+const btnPregrado = document.getElementById("btnPregrado");
+const btnPosgrado = document.getElementById("btnPosgrado");
+// Ocultar sistema al iniciar
+warningSection.classList.add("hidden");
+controlsSection.classList.add("hidden");
+cardsContainer.classList.add("hidden");
+paginationEl.classList.add("hidden");
+statusEl.classList.add("hidden");
+
+function mostrarSistema(tipo) {
+
+  // Ocultar pantalla inicial
+  serviceSelection.classList.add("hidden");
+
+  // Mostrar sistema
+  warningSection.classList.remove("hidden");
+  controlsSection.classList.remove("hidden");
+  cardsContainer.classList.remove("hidden");
+  paginationEl.classList.remove("hidden");
+  statusEl.classList.remove("hidden");
+
+  console.log("Sistema cargado para:", tipo);
+}
+
+btnPregrado.addEventListener("click", () => {
+  mostrarSistema("pregrado");
+});
+
+btnPosgrado.addEventListener("click", () => {
+  mostrarSistema("posgrado");
+});
 
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
