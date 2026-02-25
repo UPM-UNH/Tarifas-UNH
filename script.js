@@ -231,11 +231,9 @@ function activarModoGeneral() {
 function activarModoPosgrado() {
 
   serviceSelection.classList.add("hidden");
-
   controlsSection.classList.add("hidden");
   warningSection.classList.add("hidden");
-  document.body.style.background = "red";
-  cardsContainer.style.background = "yellow";
+
    
   if (generalFilters) {
     generalFilters.classList.add("hidden");
@@ -249,7 +247,8 @@ function activarModoPosgrado() {
   modoActual = "posgrado";
 
   cardsContainer.innerHTML = "";
-
+  modalOverlay.classList.add("hidden");
+  modalOverlay.style.display = "none";
   mostrarSelectorFacultad();
 }
 
