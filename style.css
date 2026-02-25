@@ -455,3 +455,54 @@ body {
     align-items: center;
   }
 }
+/* ==========================
+   Selector de Facultades
+========================== */
+
+.facultad-selector {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.facultad-title {
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.facultad-cards {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.facultad-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.facultad-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  background: #f4f8ff;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  color: #003866;
+  font-weight: 500;
+}
