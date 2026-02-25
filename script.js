@@ -33,7 +33,10 @@ const warningSection = document.getElementById("warningSection");
 const serviceSelection = document.getElementById("serviceSelection");
 const btnPregrado = document.getElementById("btnPregrado");
 const btnPosgrado = document.getElementById("btnPosgrado");
-
+const generalFilters = document.getElementById("generalFilters");
+const chkPregrado = document.getElementById("chkPregrado");
+const chkExterno = document.getElementById("chkExterno");
+const chkTrabajador = document.getElementById("chkTrabajador");
 btnPregrado.addEventListener("click", () => {
   serviceSelection.classList.add("hidden");
   activarModoGeneral();
@@ -210,7 +213,9 @@ function mostrarPantallaInicial() {
 function activarModoGeneral() {
   controlsSection.classList.remove("hidden");
   warningSection.classList.remove("hidden");
+  generalFilters.classList.remove("hidden");
   modoActual = "general";
+  
 
   dataContexto = data.filter(d =>
     (
@@ -228,7 +233,8 @@ function activarModoGeneral() {
 }
 
 function activarModoPosgrado() {
-  modoActual = "posgrado";
+   generalFilters.classList.add("hidden");
+   modoActual = "posgrado";
   mostrarSelectorFacultad();
 }
 
@@ -391,12 +397,25 @@ function applyFilters() {
   let baseData = [];
 
   if (modoActual === "general") {
-    baseData = data.filter(d =>
-      d.pregrado === "X" ||
-      d.externo === "X" ||
-      d.trabajadorunh === "X"
+
+  baseData = data.filter(d =>
+    d.pregrado === "X" ||
+    d.externo === "X" ||
+    d.trabajadorunh === "X"
+  );
+
+  const filtrosActivos = [];
+
+  if (chkPregrado.checked) filtrosActivos.push("pregrado");
+  if (chkExterno.checked) filtrosActivos.push("externo");
+  if (chkTrabajador.checked) filtrosActivos.push("trabajadorunh");
+
+  if (filtrosActivos.length > 0) {
+    baseData = baseData.filter(d =>
+      filtrosActivos.some(f => d[f] === "X")
     );
   }
+}
 
   else if (modoActual === "posgrado") {
     baseData = data.filter(d =>
@@ -560,6 +579,9 @@ function openModal(item) {
 ======================= */
 
 searchInput.oninput = applyFilters;
+chkPregrado.onchange = applyFilters;
+chkExterno.onchange = applyFilters;
+chkTrabajador.onchange = applyFilters;
 unidadFilter.onchange = applyFilters;
 modalCloseBtn.onclick = () => modalOverlay.classList.add("hidden");
 if (freeFilter) {
