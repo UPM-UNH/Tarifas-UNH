@@ -31,9 +31,6 @@ const paginationEl = document.getElementById("pagination");
 const controlsSection = document.getElementById("controlsSection");
 const warningSection = document.getElementById("warningSection");
 
-console.log("controlsSection:", controlsSection);
-console.log("warningSection:", warningSection);
-
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
@@ -336,10 +333,8 @@ function loadCSV() {
         threshold: 0.35
       });
 
-      populateUnidadFilter();
-      applyFilters();
-
       statusEl.textContent = "";
+      mostrarPantallaInicial();
     },
     error: err => {
       console.error(err);
