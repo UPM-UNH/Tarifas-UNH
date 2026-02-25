@@ -39,10 +39,8 @@ const chkExterno = document.getElementById("chkExterno");
 const chkTrabajador = document.getElementById("chkTrabajador");
 
 btnPregrado.addEventListener("click", activarModoGeneral);
-});
-
 btnPosgrado.addEventListener("click", activarModoPosgrado);
-});
+
 /* Modal */
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
