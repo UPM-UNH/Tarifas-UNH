@@ -233,6 +233,7 @@ function activarModoPosgrado() {
 }
 
 function mostrarSelectorFacultad() {
+
   const facultades = [...new Set(
     data
       .filter(d =>
@@ -244,22 +245,33 @@ function mostrarSelectorFacultad() {
   )].sort();
 
   cardsContainer.innerHTML = `
-    <div style="text-align:center; margin-top:40px;">
-      <button class="btn" onclick="volverInicio()" style="margin-bottom:20px;">
-        ← Volver
+    <div class="facultad-selector">
+
+      <button class="btn-back" onclick="volverInicio()">
+        <i class="bi bi-arrow-left-circle"></i> Volver
       </button>
-      <h3>Seleccione Facultad</h3>
-      <div style="margin-top:20px;">
-        <button class="btn" onclick="seleccionarFacultad('todas')">
-          Todas
-        </button>
+
+      <h2 class="facultad-title">
+        Seleccione Facultad
+      </h2>
+
+      <div class="facultad-cards">
+
+        <div class="facultad-card" onclick="seleccionarFacultad('todas')">
+          <i class="bi bi-collection-fill"></i>
+          <span>Todas</span>
+        </div>
+
         ${facultades.map(f => `
-          <button class="btn" style="margin:5px;"
-            onclick="seleccionarFacultad('${f}')">
-            ${f}
-          </button>
+          <div class="facultad-card"
+               onclick="seleccionarFacultad('${f}')">
+            <i class="bi bi-building"></i>
+            <span>${f}</span>
+          </div>
         `).join("")}
+
       </div>
+
     </div>
   `;
 
