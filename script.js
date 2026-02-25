@@ -265,8 +265,10 @@ cardsContainer.classList.add("facultad-mode");
       .map(d => d.area)
       .filter(Boolean)
   )].sort();
-console.log("Facultades encontradas:", facultades.length);
+
   cardsContainer.innerHTML = `
+  console.log(cardsContainer.innerHTML);
+  console.log("Altura del cardsContainer:", cardsContainer.offsetHeight);
     <div class="facultad-selector">
 
       <button class="btn-back" onclick="volverInicio()">
