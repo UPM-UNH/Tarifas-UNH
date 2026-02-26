@@ -573,3 +573,32 @@ body {
     width: 100%;
   }
 }
+
+.site-header {
+  background: linear-gradient(135deg, #002b5c, #00509d);
+  padding: 28px 20px;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-unh {
+  width: 70px;
+  height: auto;
+}
+
+.header-text h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
