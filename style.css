@@ -259,7 +259,12 @@ body {
 .modal-overlay.hidden {
   display: none;
 }
-
+/* Asegura que la overlay no sea visible si tiene la clase hidden */
+.modal-overlay.hidden {
+  display: none !important;
+  pointer-events: none !important; /* no bloquear clicks si hidden */
+  opacity: 0 !important;
+}
 .modal {
   background: #fff;
   border-radius: 14px;
