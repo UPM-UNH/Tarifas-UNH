@@ -232,9 +232,7 @@ function activarModoGeneral() {
 // REEMPLAZAR activarModoPosgrado()
 // ----------------------
 function activarModoPosgrado() {
-  console.log("activarModoPosgrado() start");
-
-  // Ocultar pantalla inicial y controles generales
+   // Ocultar pantalla inicial y controles generales
   if (serviceSelection) serviceSelection.classList.add("hidden");
   if (controlsSection) controlsSection.classList.add("hidden");
   if (warningSection) warningSection.classList.add("hidden");
@@ -263,17 +261,14 @@ function activarModoPosgrado() {
   if (statusEl) statusEl.classList.add("hidden");
 
   modoActual = "posgrado";
-
-  console.log("activarModoPosgrado(): llamando a mostrarSelectorFacultad()");
   mostrarSelectorFacultad();
-  console.log("activarModoPosgrado() end");
 }
 
 // ----------------------
 // REEMPLAZAR mostrarSelectorFacultad()
 // ----------------------
 function mostrarSelectorFacultad() {
-  console.log("mostrarSelectorFacultad() start");
+ 
 
   if (!cardsContainer) {
     console.error("mostrarSelectorFacultad: cardsContainer no encontrado.");
@@ -292,8 +287,6 @@ function mostrarSelectorFacultad() {
       .map(d => d.area)
       .filter(Boolean)
   )].sort() : []);
-
-  console.log("mostrarSelectorFacultad: facultades encontradas:", facultades.length);
 
   // DEBUG: bloque visible para confirmar que la función se ejecuta (sustituible)
   // Cuando confirmes que funciona, reemplaza este bloque por el HTML real.
@@ -322,7 +315,6 @@ function mostrarSelectorFacultad() {
   if (paginationEl) paginationEl.classList.add("hidden");
   if (statusEl) statusEl.classList.add("hidden");
 
-  console.log("mostrarSelectorFacultad() end");
 }
 function seleccionarFacultad(facultad) {
 
