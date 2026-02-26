@@ -267,8 +267,6 @@ cardsContainer.classList.add("facultad-mode");
   )].sort();
 
   cardsContainer.innerHTML = `
-  console.log(cardsContainer.innerHTML);
-  console.log("Altura del cardsContainer:", cardsContainer.offsetHeight);
     <div class="facultad-selector">
 
       <button class="btn-back" onclick="volverInicio()">
@@ -394,7 +392,11 @@ function loadCSV() {
       });
 
       statusEl.textContent = "";
-      mostrarPantallaInicial();
+
+      // 🔥 Solo mostrar pantalla inicial si el usuario aún no ha elegido modo
+      if (modoActual === null) {
+        mostrarPantallaInicial();
+      }
     },
     error: err => {
       console.error(err);
