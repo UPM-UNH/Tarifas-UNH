@@ -382,14 +382,13 @@ body {
 ================================= */
 
 .service-selection {
-  text-align: center;
-  padding: 60px 20px 40px 20px;
+  padding: 80px 20px 60px 20px;
 }
 
 .selection-title {
-  font-size: 1.8rem;
-  margin-bottom: 50px;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 60px;
   color: #1d3557;
 }
 
