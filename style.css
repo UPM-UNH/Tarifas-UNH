@@ -596,3 +596,40 @@ body {
   font-size: 0.95rem;
   opacity: 0.85;
 }
+
+.site-header {
+  background: linear-gradient(135deg, #002b5c, #00509d);
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.site-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+
+  .site-header {
+    padding: 18px 16px;
+  }
+
+  .site-header h1 {
+    font-size: 1.45rem;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    margin-top: 6px;
+    opacity: 0.85;
+  }
+
+}
