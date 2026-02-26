@@ -318,8 +318,8 @@ function mostrarSelectorFacultad() {
 }
 function seleccionarFacultad(facultad) {
 
- cardsContainer.classList.remove("cards");
- cardsContainer.classList.add("facultad-mode");
+  cardsContainer.classList.remove("facultad-mode");
+  cardsContainer.classList.add("cards");
 
   controlsSection.classList.remove("hidden");
   warningSection.classList.remove("hidden");
