@@ -228,45 +228,102 @@ function activarModoGeneral() {
   applyFilters();
 }
 
+// ----------------------
+// REEMPLAZAR activarModoPosgrado()
+// ----------------------
 function activarModoPosgrado() {
+  console.log("activarModoPosgrado() start");
 
-  serviceSelection.classList.add("hidden");
-  controlsSection.classList.add("hidden");
-  warningSection.classList.add("hidden");
+  // Ocultar pantalla inicial y controles generales
+  if (serviceSelection) serviceSelection.classList.add("hidden");
+  if (controlsSection) controlsSection.classList.add("hidden");
+  if (warningSection) warningSection.classList.add("hidden");
 
-   
-  if (generalFilters) {
-    generalFilters.classList.add("hidden");
+  // Ocultar filtros generales (si existen)
+  if (generalFilters) generalFilters.classList.add("hidden");
+
+  // Asegurar que el contenedor donde mostraremos las cards está visible
+  if (cardsContainer) {
+    cardsContainer.classList.remove("hidden");
+    // limpiar contenido previo
+    cardsContainer.innerHTML = "";
+  } else {
+    console.warn("activarModoPosgrado: cardsContainer no existe");
   }
 
-  // 🔥 ASEGURAR QUE EL CONTENEDOR ESTÉ VISIBLE
-  cardsContainer.classList.remove("hidden");
-  paginationEl.classList.add("hidden");
-  statusEl.classList.add("hidden");
+  // Forzar ocultado del overlay/modal (evita pantalla gris)
+  if (typeof modalOverlay !== "undefined" && modalOverlay) {
+    modalOverlay.classList.add("hidden");       // usa la clase existente
+    modalOverlay.style.display = "none";       // forzar en caso de conflictos CSS
+    modalOverlay.setAttribute("aria-hidden", "true");
+  }
+
+  // Ocultar paginación / status temporalmente
+  if (paginationEl) paginationEl.classList.add("hidden");
+  if (statusEl) statusEl.classList.add("hidden");
 
   modoActual = "posgrado";
 
-  cardsContainer.innerHTML = "";
-  modalOverlay.classList.add("hidden");
-  modalOverlay.style.display = "none";
+  console.log("activarModoPosgrado(): llamando a mostrarSelectorFacultad()");
   mostrarSelectorFacultad();
+  console.log("activarModoPosgrado() end");
 }
 
+// ----------------------
+// REEMPLAZAR mostrarSelectorFacultad()
+// ----------------------
 function mostrarSelectorFacultad() {
+  console.log("mostrarSelectorFacultad() start");
 
+  if (!cardsContainer) {
+    console.error("mostrarSelectorFacultad: cardsContainer no encontrado.");
+    return;
+  }
+
+  // Asegurar clases para el modo de facultad
   cardsContainer.classList.remove("cards");
   cardsContainer.classList.add("facultad-mode");
+  cardsContainer.classList.remove("hidden");
 
-  // 🔥 SOLO ESTO, NADA MÁS
+  // obtener facultades (protección si data no está lista)
+  const facultades = (Array.isArray(data) ? [...new Set(
+    data
+      .filter(d => d.posgrado === "X" && normalizeKey(d.area).startsWith("upg"))
+      .map(d => d.area)
+      .filter(Boolean)
+  )].sort() : []);
+
+  console.log("mostrarSelectorFacultad: facultades encontradas:", facultades.length);
+
+  // DEBUG: bloque visible para confirmar que la función se ejecuta (sustituible)
+  // Cuando confirmes que funciona, reemplaza este bloque por el HTML real.
   cardsContainer.innerHTML = `
-    <div style="background: lime; padding: 40px; font-size: 24px;">
-      FUNCIONA POSGRADO
+    <div class="facultad-selector" aria-live="polite">
+      <button class="btn-back" onclick="volverInicio()">
+        <i class="bi bi-arrow-left-circle"></i> Volver
+      </button>
+
+      <h2 class="facultad-title">Seleccione Facultad</h2>
+
+      <div class="facultad-cards">
+        <div class="facultad-card" onclick="seleccionarFacultad('todas')">
+          <i class="bi bi-collection-fill"></i><span>Todas</span>
+        </div>
+        ${facultades.map(f => `
+          <div class="facultad-card" onclick="seleccionarFacultad('${f.replace(/'/g, "\\'")}')">
+            <i class="bi bi-building"></i><span>${f}</span>
+          </div>
+        `).join("")}
+      </div>
     </div>
   `;
 
-  paginationEl.innerHTML = "";
-}
+  // Asegurar paginación/status ocultos hasta que se seleccione facultad
+  if (paginationEl) paginationEl.classList.add("hidden");
+  if (statusEl) statusEl.classList.add("hidden");
 
+  console.log("mostrarSelectorFacultad() end");
+}
 function seleccionarFacultad(facultad) {
 
  cardsContainer.classList.remove("cards");
