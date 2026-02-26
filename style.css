@@ -521,7 +521,8 @@ body {
 .facultad-mode {
   width: 100%;
   display: flex;
-  justify-content: center;  /* 🔥 Centra el selector */
+  flex-direction: column;
+  align-items: center;
 }
 .filters-wrap {
   display: flex;
