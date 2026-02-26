@@ -61,7 +61,7 @@
     ⚠️ Las tarifas están sujetas a actualización.
   </div>
 
-  <div id="controlsSection" class="controls hidden">
+ <div id="controlsSection" class="controls hidden">
 
   <div class="search-wrap">
     <input id="searchInput" type="text"
@@ -70,51 +70,53 @@
 
   <div class="filters-wrap">
 
-  <div class="filters-left">
+    <div class="filters-left">
 
-    <select id="unidadFilter" class="filter-select">
-      <option value="">Unidad Responsable</option>
-    </select>
+      <select id="unidadFilter" class="filter-select">
+        <option value="">Unidad Responsable</option>
+      </select>
 
-    <div id="generalFilters" class="general-filters">
+      <div id="generalFilters" class="general-filters">
 
-      <label class="toggle">
-        <input type="checkbox" id="freeFilter">
-        <span>Gratis</span>
-      </label>
+        <label class="toggle">
+          <input type="checkbox" id="freeFilter">
+          <span>Gratis</span>
+        </label>
 
-      <label class="toggle">
-        <input type="checkbox" id="chkPregrado">
-        <span>Pregrado</span>
-      </label>
+        <label class="toggle">
+          <input type="checkbox" id="chkPregrado">
+          <span>Pregrado</span>
+        </label>
 
-      <label class="toggle">
-        <input type="checkbox" id="chkExterno">
-        <span>Externo</span>
-      </label>
+        <label class="toggle">
+          <input type="checkbox" id="chkExterno">
+          <span>Externo</span>
+        </label>
 
-      <label class="toggle">
-        <input type="checkbox" id="chkTrabajador">
-        <span>Trabajador UNH</span>
-      </label>
+        <label class="toggle">
+          <input type="checkbox" id="chkTrabajador">
+          <span>Trabajador UNH</span>
+        </label>
+
+      </div>
 
     </div>
 
+    <button id="exportPdfBtn" class="btn-export">
+      <i class="bi bi-file-earmark-pdf-fill"></i> Exportar PDF
+    </button>
+
   </div>
 
-  <button id="exportPdfBtn" class="btn-export">
-    <i class="bi bi-file-earmark-pdf-fill"></i> Exportar PDF
-  </button>
+</div> <!-- 🔴 AQUÍ SE CIERRA controlsSection -->
 
-</div>
+<!-- 🔵 AHORA ESTO VA FUERA -->
 
-  <div id="cardsContainer" class="cards"></div>
+<div id="cardsContainer" class="cards"></div>
 
-  <div id="pagination" class="pagination"></div>
+<div id="pagination" class="pagination"></div>
 
-  <div id="status" class="status"></div>
-
-</div>
+<div id="status" class="status"></div>
 
 <!-- MODAL -->
 <div id="modalOverlay" class="modal-overlay hidden" aria-hidden="true">
