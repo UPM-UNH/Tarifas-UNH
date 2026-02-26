@@ -579,14 +579,25 @@ body {
   padding: 16px 20px;
 }
 
-.header-content {
+.header-container {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
   align-items: center;
-  justify-content: center; /* 🔥 centra todo el bloque */
-  gap: 18px;
-  text-align: left;
+}
+
+.header-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.header-center {
+  text-align: center;
+}
+
+.header-right {
+  /* espacio vacío para equilibrio visual */
 }
 
 .logo-unh {
@@ -594,18 +605,14 @@ body {
   width: auto;
 }
 
-.header-text {
-  text-align: left;
-}
-
-.header-text h1 {
+.site-header h1 {
   font-size: 1.8rem;
-  font-weight: 700;
   margin: 0;
+  font-weight: 700;
 }
 
 .subtitle {
+  margin: 4px 0 0 0;
   font-size: 0.95rem;
   opacity: 0.85;
-  margin: 0;
 }
