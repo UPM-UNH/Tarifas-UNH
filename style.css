@@ -575,7 +575,7 @@ body {
 
 .site-header {
   background: linear-gradient(135deg, #002b5c, #00509d);
-  padding: 28px 20px;
+  padding: 16px 20px;
 }
 
 .header-content {
@@ -583,21 +583,28 @@ body {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center; /* 🔥 centra todo el bloque */
+  gap: 18px;
+  text-align: left;
 }
 
 .logo-unh {
-  width: 70px;
-  height: auto;
+  height: 55px;
+  width: auto;
+}
+
+.header-text {
+  text-align: left;
 }
 
 .header-text h1 {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  margin: 0;
 }
 
 .subtitle {
   font-size: 0.95rem;
   opacity: 0.85;
+  margin: 0;
 }
