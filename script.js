@@ -254,46 +254,13 @@ function activarModoPosgrado() {
 
 function mostrarSelectorFacultad() {
 
-cardsContainer.classList.remove("cards");
-cardsContainer.classList.add("facultad-mode");
-  const facultades = [...new Set(
-    data
-      .filter(d =>
-        d.posgrado === "X" &&
-        normalizeKey(d.area).startsWith("upg")
-      )
-      .map(d => d.area)
-      .filter(Boolean)
-  )].sort();
+  cardsContainer.classList.remove("cards");
+  cardsContainer.classList.add("facultad-mode");
 
+  // 🔥 SOLO ESTO, NADA MÁS
   cardsContainer.innerHTML = `
-    <div class="facultad-selector">
-
-      <button class="btn-back" onclick="volverInicio()">
-        <i class="bi bi-arrow-left-circle"></i> Volver
-      </button>
-
-      <h2 class="facultad-title">
-        Seleccione Facultad
-      </h2>
-
-      <div class="facultad-cards">
-
-        <div class="facultad-card" onclick="seleccionarFacultad('todas')">
-          <i class="bi bi-collection-fill"></i>
-          <span>Todas</span>
-        </div>
-
-        ${facultades.map(f => `
-          <div class="facultad-card"
-               onclick="seleccionarFacultad('${f}')">
-            <i class="bi bi-building"></i>
-            <span>${f}</span>
-          </div>
-        `).join("")}
-
-      </div>
-
+    <div style="background: lime; padding: 40px; font-size: 24px;">
+      FUNCIONA POSGRADO
     </div>
   `;
 
