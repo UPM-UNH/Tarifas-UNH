@@ -811,7 +811,7 @@ const tableData = filteredData.map(item => [
   item.tarifa,
   `S/ ${item.monto.toFixed(2)}`,
   item.origen,
-  modoActual === "posgrado" ? item.area : item.unidad,
+  item.unidad,
   formatRequisitosForPDF(item.requisitos)
 ]);
 
