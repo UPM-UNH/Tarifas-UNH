@@ -633,3 +633,11 @@ body {
   }
 
 }
+
+.result-info {
+  width: 100%;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1e2f4f;
+}
