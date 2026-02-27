@@ -806,7 +806,7 @@ doc.text(
 );
 
   /* 4️⃣ Construcción de la tabla */
-const tableData = filteredData.map(item => [
+  const tableData = filteredData.map(item => [
   item.proceso,
   item.tarifa,
   `S/ ${item.monto.toFixed(2)}`,
@@ -814,18 +814,6 @@ const tableData = filteredData.map(item => [
   item.unidad,
   formatRequisitosForPDF(item.requisitos)
 ]);
-
-  doc.autoTable({
-    startY: 110,
-    head: [[
-      "Proceso",
-      "Tarifa",
-      "Monto",
-      "Origen",
-      "Unidad",
-      "Requisitos"
-    ]],
-    body: tableData,
 
   doc.autoTable({
     startY: 110,
