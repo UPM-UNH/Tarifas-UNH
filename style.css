@@ -634,10 +634,12 @@ body {
 
 }
 
-.result-info {
-  width: 100%;
-  margin-bottom: 15px;
+.results-info {
+  max-width: 1200px;
+  margin: 15px auto 5px auto;
+  padding: 0 10px;
   font-size: 0.95rem;
   font-weight: 500;
   color: #1e2f4f;
 }
+
