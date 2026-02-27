@@ -356,6 +356,9 @@ function seleccionarFacultad(facultad) {
 
   populateUnidadFilter();
   applyFilters();
+
+  if (paginationEl) paginationEl.classList.remove("hidden");
+  if (statusEl) statusEl.classList.remove("hidden");
 }
 
 function loadCSV() {
