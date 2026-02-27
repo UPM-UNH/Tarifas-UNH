@@ -203,6 +203,8 @@ function mostrarPantallaInicial() {
   warningSection.classList.add("hidden");
   cardsContainer.innerHTML = "";
   paginationEl.innerHTML = "";
+  const resultsInfoEl = document.getElementById("resultsInfo");
+  if (resultsInfoEl) resultsInfoEl.classList.add("hidden");
 }
 
 function activarModoGeneral() {
@@ -267,8 +269,10 @@ function activarModoPosgrado() {
 // ----------------------
 // REEMPLAZAR mostrarSelectorFacultad()
 // ----------------------
+
 function mostrarSelectorFacultad() {
- 
+const resultsInfoEl = document.getElementById("resultsInfo");
+if (resultsInfoEl) resultsInfoEl.classList.add("hidden"); 
 
   if (!cardsContainer) {
     console.error("mostrarSelectorFacultad: cardsContainer no encontrado.");
@@ -508,6 +512,19 @@ function applyFilters() {
   });
 
   filteredData = results;
+   const resultsInfoEl = document.getElementById("resultsInfo");
+
+   if (resultsInfoEl) {
+     const total = results.length;
+
+     if (total === 1) {
+       resultsInfoEl.textContent = "Se encontró 1 resultado";
+     } else {
+       resultsInfoEl.textContent = `Se encontraron ${total} resultados`;
+     }
+
+     resultsInfoEl.classList.remove("hidden");
+   }
   renderPage(1);
 }
 
@@ -526,21 +543,7 @@ function renderPage(page) {
 
 function renderCards(items) {
   cardsContainer.innerHTML = "";
-   // Contador de resultados
-   const total = filteredData.length;
-
-   const resultInfo = document.createElement("div");
-   resultInfo.className = "result-info";
-
-     if (total === 1) {
-     resultInfo.textContent = "Se encontró 1 resultado";
-   } else {
-     resultInfo.textContent = `Se encontraron ${total} resultados`;
-   }
-
-   // Insertar antes del grid
-   cardsContainer.appendChild(resultInfo);
-
+   
   if (modoActual) {
     const volverBtn = document.createElement("button");
     volverBtn.className = "btn";
