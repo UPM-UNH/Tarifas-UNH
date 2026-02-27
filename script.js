@@ -254,7 +254,6 @@ function activarModoPosgrado() {
   // Forzar ocultado del overlay/modal (evita pantalla gris)
   if (typeof modalOverlay !== "undefined" && modalOverlay) {
     modalOverlay.classList.add("hidden");       // usa la clase existente
-    modalOverlay.style.display = "none";       // forzar en caso de conflictos CSS
     modalOverlay.setAttribute("aria-hidden", "true");
   }
 
