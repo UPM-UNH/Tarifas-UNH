@@ -526,6 +526,20 @@ function renderPage(page) {
 
 function renderCards(items) {
   cardsContainer.innerHTML = "";
+   // Contador de resultados
+   const total = filteredData.length;
+
+   const resultInfo = document.createElement("div");
+   resultInfo.className = "result-info";
+
+     if (total === 1) {
+     resultInfo.textContent = "Se encontró 1 resultado";
+   } else {
+     resultInfo.textContent = `Se encontraron ${total} resultados`;
+   }
+
+   // Insertar antes del grid
+   cardsContainer.appendChild(resultInfo);
 
   if (modoActual) {
     const volverBtn = document.createElement("button");
