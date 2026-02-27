@@ -806,12 +806,12 @@ doc.text(
 );
 
   /* 4️⃣ Construcción de la tabla */
-  const tableData = filteredData.map(item => [
+const tableData = filteredData.map(item => [
   item.proceso,
   item.tarifa,
   `S/ ${item.monto.toFixed(2)}`,
   item.origen,
-  item.unidad,
+  modoActual === "posgrado" ? item.area : item.unidad,
   formatRequisitosForPDF(item.requisitos)
 ]);
 
